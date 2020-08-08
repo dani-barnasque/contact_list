@@ -1,7 +1,10 @@
+import 'package:contact_list/ui/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    MaterialApp(),
+    MaterialApp(
+      home: HomePage(),
+    ),
   );
 }
