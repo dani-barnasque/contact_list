@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:contact_list/helpers/contact_helper.dart';
+import 'package:contact_list/ui/contact_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,15 +18,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    helper.getAllContacts().then(
-      (list) {
-        setState(
-          () {
-            contacts = list;
-          },
-        );
-      },
-    );
+    _getAllContacts();
   }
 
   @override
@@ -38,7 +31,9 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _showContactPage();
+        },
         child: Icon(Icons.add),
         backgroundColor: Colors.red,
       ),
@@ -102,6 +97,44 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      onTap: () {
+        _showContactPage();
+      },
+    );
+  }
+
+  void _showContactPage(
+      {Contact
+          contact}) //Entre chaves para ser opcional. Quando chamar no botão, não passar contato. Quando chamar do card, passa
+  async {
+    final recContact = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ContactPage(
+          contact: contact,
+        ),
+      ),
+    );
+    if (recContact != null) {
+      if (contact != null) {
+        await helper.updateContact(recContact);
+        // ignore: await_only_futures
+        _getAllContacts();
+      } else {
+        await helper.saveContact(recContact);
+      }
+    }
+  }
+
+  void _getAllContacts() {
+    helper.getAllContacts().then(
+      (list) {
+        setState(
+          () {
+            contacts = list;
+          },
+        );
+      },
     );
   }
 }
