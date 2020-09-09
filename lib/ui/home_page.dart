@@ -4,6 +4,8 @@ import 'package:contact_list/helpers/contact_helper.dart';
 import 'package:contact_list/ui/contact_page.dart';
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -118,7 +120,10 @@ class _HomePageState extends State<HomePage> {
                   Padding(
                     padding: EdgeInsets.all(10.0),
                     child: FlatButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        launch('tel:${contacts[index].phone}');
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         "Ligar",
                         style: TextStyle(color: Colors.red, fontSize: 20.0),
