@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           PopupMenuButton<OrderOptions>(
             itemBuilder: (context) {
-              <PopupMenuEntry<OrderOptions>>[
+              return <PopupMenuEntry<OrderOptions>>[
                 const PopupMenuItem<OrderOptions>(
                   child: Text('Ordenar de A a Z'),
                   value: OrderOptions.orderaz,
